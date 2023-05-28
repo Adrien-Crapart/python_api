@@ -1,0 +1,22 @@
+# docker-compose build
+version: '3.7'
+volumes:
+  api-data:
+
+
+services:
+  web:
+    container_name: flask-api
+    build: .
+    volumes:
+      - api-data:/usr/src/app/
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    restart: always
+
+networks:
+  default:
+    external:
+      name: database_network-system
