@@ -4,16 +4,13 @@ Get, Put, Update or Delete all the data on user request (with JWT)
 
 ## Organisation
 
-- Dags folder
-    - Dags run and schedulers
-    - Scripts
-    - Data files
+- migrations : Make migrations backup
 
-- Configuration
-    - `Change settings for dags runs`
+- models : Definite models to push and use in database
 
-- requirements
-    - `Add news libraries for scripts`
+- resources : Concept all routes for users requests
+
+- templates : build views routes or templates for emails sending
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
@@ -78,3 +75,4 @@ Exception for flower Celery mode
 ## Authors
 
 - [@adrien.crapart](https://www.github.com/Adrien-Crapart)
+
