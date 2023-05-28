@@ -1,57 +1,80 @@
-## Run all development files
+# REST API Python
 
-For windows environment use that
-`cd api`
-`.venv\Scripts\activate.ps1`
-`python app.py / flask run`
-`pip install -r requirements.txt`
+Get, Put, Update or Delete all the data on user request (with JWT)
 
-## Build docker image
+## Organisation
 
-docker ps
-docker run --name=nginx -d -p 80:80 nginx
-docker inspect <container ID>
-docker inspect <container id> | findstr "IPAddress"
-docker volume create pg_data
-docker run --name=postgis -d -e POSTGRES_USER=alex -e POSTGRES_PASS=password -e POSTGRES_DBNAME=gis -e ALLOW_IP_RANGE=0.0.0.0/0 -p 5432:5432 -v pg_data:/var/lib/postgresql --restart=always kartoza/postgis:9.6-2.4
-docker logs postgis
+- Dags folder
+    - Dags run and schedulers
+    - Scripts
+    - Data files
 
-`docker build -t rest-apis-flask .`
-`docker run -dp 5005:5000 rest-apis-flask`
-`docker run -dp 5000:5000 -w /app -v "$(pwd):/app" rest-apis-flask`
-docker-compose up / docker-compose up -d --build
-`docker-compose down -v`
-docker network create tulip-net
-docker network connect tulip-net flask-api
+- Configuration
+    - `Change settings for dags runs`
 
-## Aiflow running tasks
+- requirements
+    - `Add news libraries for scripts`
+## Environment Variables
 
-`docker exec -it  api-airflow-scheduler-1 /bin/bash`
-airflow tasks test user_processing extract_user 2023-01-28
-docker cp api-airflow-scheduler-1:/opt/airflow/airflow.cfg .
+To run this project, you will need to add the following environment variables to your .env file
 
-`docker ps`
-`docker exec -it postgresql_db bash`
-`find / -name pg_hba.conf`
-`docker cp postgresql_db:/var/lib/postgresql/data/pg_hba.conf .`
-`docker cp pg_hba.conf postgresql_db:/var/lib/postgresql/data/pg_hba.conf`
+Flask args
 
-## Run migrations
+`FLASK_DEBUG=` 1 or 0
 
-`flask db init`
-`flask db migrate`
-`flask db upgrade`
+`JWT_SECRET_KEY`
 
-## Git usage
+Mail server
 
-`git init`
-`git add myfile.py` OR `git add .`
-`git rm --cached scheamas.py`
-`git checkout -- app.py`
-`git restore app.py`
-`git commit -m "message"`
-`git branch -M main`
-`git remote add origin https://github.com/Adrien-Crapart/data-api.git`
-`git push` OR `git push -u origin main`
-`git reset COMMIT_ID`
-`git revert COMMIT_ID`
+`SMTP_SERVER`
+
+`SMTP_EMAIL`
+
+`SMTP_PASSWORD`
+
+Database connections
+
+`DATABASE_URL` postgresql://user:password@postgres:5432/data
+## Run Locally
+
+Create python env folder
+
+```bash
+  python -m venv .
+```
+
+Go to python environment
+
+```bash
+  .venv\Scripts\activate.ps1
+```
+
+Install librairies
+
+```bash
+  pip install -r requirements.txt
+```
+
+Start the app
+
+```bash
+  python app.py
+  OR
+  flask run
+```
+
+
+## Deployment
+
+To build all images on Docker with separates volumes
+
+```bash
+  docker-compose up -d --build
+```
+Exception for flower Celery mode
+```bash
+  docker-compose up -d --build flower
+```
+## Authors
+
+- [@adrien.crapart](https://www.github.com/Adrien-Crapart)
